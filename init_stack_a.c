@@ -1,48 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   init_stack_a.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mekaraca <reaphenn@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/23 19:57:53 by mekaraca          #+#    #+#             */
+/*   Created: 2026/02/24 16:44:52 by mekaraca          #+#    #+#             */
 /*   Updated: 2026/02/24 19:10:33 by mekaraca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	push_top(t_stack *dst, t_stack *src)
+void	init_stack_a(t_stack *a, char **tokens)
 {
-	t_node	*x;
+	int		i;
+	int		value;
+	t_node	*node;
 
-	if (!dst || !src || src->size == 0)
-		return ;
-	x = src->top;
-	src->top = x->next;
-	if (src->top == NULL)
-		src->bottom = NULL;
-	else
-		src->top->prev = NULL;
-	src->size--;
-	x->prev = NULL;
-	x->next = dst->top;
-	if (dst->size != 0)
-		dst->top->prev = x;
-	else
-		dst->bottom = x;
-	dst->top = x;
-	dst->size++;
-}
-
-void	pa(t_stack *a, t_stack *b)
-{
-	push_top(a, b);
-	write(1, "pa\n", 3);
-}
-
-void	pb(t_stack *a, t_stack *b)
-{
-	push_top(b, a);
-	write(1, "pb\n", 3);
+	if (!a || !tokens || !tokens[0])
+		error_exit();
+	stack_init(a);
+	i = 0;
+	while (tokens[i])
+	{
+		if (!is_valid_syntax(tokens[i]))
+			error_exit();
+		if (!to_int_checked(tokens[i], &value))
+			error_exit();
+		if (has_duplicate(a, value))
+			error_exit();
+		node = node_new(value);
+		if (!node)
+			error_exit();
+		stack_add_bottom(a, node);
+		i++;
+	}
 }

@@ -6,26 +6,23 @@
 /*   By: mekaraca <reaphenn@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 20:58:34 by mekaraca          #+#    #+#             */
-/*   Updated: 2026/02/23 22:01:17 by mekaraca         ###   ########.fr       */
+/*   Updated: 2026/02/24 19:10:33 by mekaraca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void rev_rotate(t_stack *s)
+static void	rev_rotate(t_stack *s)
 {
-	t_node *x;
-	t_node *y;
+	t_node	*x;
+	t_node	*y;
 
 	if (!s || s->size < 2)
 		return ;
-
 	y = s->bottom;
 	x = y->prev;
-
 	s->bottom = x;
 	x->next = NULL;
-
 	y->prev = NULL;
 	y->next = s->top;
 	s->top->prev = y;
@@ -43,6 +40,7 @@ void	rrb(t_stack *b)
 	rev_rotate(b);
 	write(1, "rrb\n", 4);
 }
+
 void	rrr(t_stack *a, t_stack *b)
 {
 	rev_rotate(a);

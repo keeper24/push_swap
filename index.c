@@ -1,48 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   index.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mekaraca <reaphenn@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/23 19:57:53 by mekaraca          #+#    #+#             */
+/*   Created: 2026/02/24 18:03:15 by mekaraca          #+#    #+#             */
 /*   Updated: 2026/02/24 19:10:33 by mekaraca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	push_top(t_stack *dst, t_stack *src)
+void	assign_index(t_stack *a)
 {
-	t_node	*x;
+	t_node	*cur;
+	t_node	*cmp;
+	int		idx;
 
-	if (!dst || !src || src->size == 0)
+	if (!a || a->size < 2)
 		return ;
-	x = src->top;
-	src->top = x->next;
-	if (src->top == NULL)
-		src->bottom = NULL;
-	else
-		src->top->prev = NULL;
-	src->size--;
-	x->prev = NULL;
-	x->next = dst->top;
-	if (dst->size != 0)
-		dst->top->prev = x;
-	else
-		dst->bottom = x;
-	dst->top = x;
-	dst->size++;
-}
-
-void	pa(t_stack *a, t_stack *b)
-{
-	push_top(a, b);
-	write(1, "pa\n", 3);
-}
-
-void	pb(t_stack *a, t_stack *b)
-{
-	push_top(b, a);
-	write(1, "pb\n", 3);
+	idx = 0;
+	cur = a->top;
+	while (cur)
+	{
+		idx = 0;
+		cmp = a->top;
+		while (cmp)
+		{
+			if (cmp->value < cur->value)
+				idx++;
+			cmp = cmp->next;
+		}
+		cur->index = idx;
+		cur = cur->next;
+	}
 }

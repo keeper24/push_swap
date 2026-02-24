@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node.c                                             :+:      :+:    :+:   */
+/*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mekaraca <reaphenn@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 20:48:50 by mekaraca          #+#    #+#             */
-/*   Updated: 2026/02/19 21:31:04 by mekaraca         ###   ########.fr       */
+/*   Updated: 2026/02/24 19:10:33 by mekaraca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "push_swap.h"
 
-void		stack_init(t_stack *stack)
+void	stack_init(t_stack *stack)
 {
 	if (!stack)
 		return ;
@@ -21,9 +21,9 @@ void		stack_init(t_stack *stack)
 	stack->size = 0;
 }
 
-t_node		*node_new(int value)
+t_node	*node_new(int value)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = malloc(sizeof(t_node));
 	if (!node)
@@ -35,11 +35,11 @@ t_node		*node_new(int value)
 	return (node);
 }
 
-void		stack_add_bottom(t_stack *stack, t_node *node)
+void	stack_add_bottom(t_stack *stack, t_node *node)
 {
-	if(!stack || !node)
+	if (!stack || !node)
 		return ;
-	if(stack->size == 0)
+	if (stack->size == 0)
 	{
 		stack->top = node;
 		stack->bottom = node;
@@ -53,14 +53,13 @@ void		stack_add_bottom(t_stack *stack, t_node *node)
 	stack->size++;
 }
 
-void		stack_clear(t_stack *stack)
+void	stack_clear(t_stack *stack)
 {
-	t_node *curr;
-	t_node *next;
+	t_node	*curr;
+	t_node	*next;
 
 	if (!stack)
 		return ;
-
 	curr = stack->top;
 	while (curr)
 	{
@@ -71,4 +70,20 @@ void		stack_clear(t_stack *stack)
 	stack->top = NULL;
 	stack->bottom = NULL;
 	stack->size = 0;
+}
+
+int	is_sorted(t_stack *a)
+{
+	t_node	*cur;
+
+	if (!a || a->size < 2)
+		return (1);
+	cur = a->top;
+	while (cur && cur->next)
+	{
+		if (cur->value > cur->next->value)
+			return (0);
+		cur = cur->next;
+	}
+	return (1);
 }

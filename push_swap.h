@@ -21,15 +21,15 @@
 
 typedef struct s_node
 {
-	int		value;
-	int		index;
-	int		cost_a;
-	int		cost_b;
-	int		cost_total;
-	int		target;
-	t_node	*next;
-	t_node	*prev;
-}	t_node;
+	int				value;
+	int				index;
+	int				cost_a;
+	int				cost_b;
+	int				cost_total;
+	int				target;
+	struct s_node	*next;
+	struct s_node	*prev;
+}					t_node;
 
 typedef struct s_stack
 {
